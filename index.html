@@ -1,0 +1,820 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mahkota Slots — Brunei Darussalam</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700;900&family=Crimson+Pro:ital,wght@0,300;0,400;0,600;1,300&display=swap" rel="stylesheet">
+<style>
+  *{box-sizing:border-box;margin:0;padding:0}
+  :root{
+    --gold:#C9A227;--gold2:#F0C040;--gold3:#7A6010;
+    --dark:#0A0A0F;--dark2:#12121A;--dark3:#1C1C2A;
+    --panel:#16162A;--panel2:#1E1E30;
+    --text:#EDE8D8;--text2:#A89F82;
+    --red:#C0392B;--green:#1E8449;--blue:#1A5276;
+    --teal:#0E6655;
+    --border:rgba(201,162,39,0.25);
+    --border2:rgba(201,162,39,0.5);
+  }
+  body{background:var(--dark);color:var(--text);font-family:'Crimson Pro',serif;font-size:16px;min-height:100vh;overflow-x:hidden}
+
+  .nav{display:flex;align-items:center;justify-content:space-between;padding:10px 20px;background:var(--dark2);border-bottom:1px solid var(--border2);position:sticky;top:0;z-index:100}
+  .nav-logo{font-family:'Cinzel',serif;font-size:18px;color:var(--gold2);letter-spacing:2px}
+  .nav-logo span{color:var(--text2);font-size:11px;display:block;letter-spacing:4px;font-family:'Crimson Pro',serif}
+  .nav-right{display:flex;align-items:center;gap:10px}
+  .nav-balance{background:var(--dark3);border:1px solid var(--border2);padding:5px 14px;border-radius:4px;font-family:'Cinzel',serif;color:var(--gold);font-size:13px}
+  .btn{cursor:pointer;border:1px solid var(--border2);background:transparent;color:var(--text);padding:6px 16px;border-radius:3px;font-family:'Cinzel',serif;font-size:11px;letter-spacing:1px;transition:all 0.2s}
+  .btn:hover{background:var(--border);color:var(--gold2)}
+  .btn-gold{background:linear-gradient(135deg,var(--gold3),var(--gold));color:#000;border:none;font-weight:700}
+  .btn-gold:hover{background:linear-gradient(135deg,var(--gold),var(--gold2));color:#000}
+  .btn-red{background:var(--red);border-color:var(--red);color:#fff}
+  .btn-red:hover{background:#a93226}
+  .tab-btn{border:none;background:transparent;color:var(--text2);padding:8px 16px;cursor:pointer;font-family:'Cinzel',serif;font-size:11px;letter-spacing:1px;border-bottom:2px solid transparent;transition:all 0.2s}
+  .tab-btn.active{color:var(--gold);border-bottom-color:var(--gold)}
+
+  .screen{display:none;padding:20px;max-width:900px;margin:0 auto}
+  .screen.active{display:block}
+
+  .login-wrap{min-height:80vh;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:24px}
+  .login-title{font-family:'Cinzel',serif;font-size:36px;color:var(--gold);text-align:center;line-height:1.2}
+  .login-subtitle{color:var(--text2);font-style:italic;font-size:15px;text-align:center}
+  .login-card{background:var(--panel);border:1px solid var(--border2);border-radius:8px;padding:32px;width:100%;max-width:360px;display:flex;flex-direction:column;gap:14px}
+  .form-label{font-size:11px;letter-spacing:2px;color:var(--text2);margin-bottom:4px;display:block;font-family:'Cinzel',serif}
+  .form-input{width:100%;background:var(--dark3);border:1px solid var(--border);color:var(--text);padding:10px 14px;border-radius:3px;font-family:'Crimson Pro',serif;font-size:15px;outline:none}
+  .form-input:focus{border-color:var(--gold);box-shadow:0 0 0 2px rgba(201,162,39,0.15)}
+  .login-hint{font-size:12px;color:var(--text2);text-align:center;margin-top:4px}
+  .login-hint span{color:var(--gold);cursor:pointer}
+
+  .slot-wrap{display:flex;flex-direction:column;align-items:center;gap:16px}
+  .slot-machine{background:var(--panel);border:2px solid var(--border2);border-radius:12px;padding:24px 28px;width:100%;max-width:600px;position:relative}
+  .machine-title{font-family:'Cinzel',serif;text-align:center;color:var(--gold);font-size:22px;letter-spacing:3px;margin-bottom:4px}
+  .machine-sub{text-align:center;color:var(--text2);font-size:11px;letter-spacing:3px;margin-bottom:16px;font-family:'Cinzel',serif}
+  .reels-container{display:flex;gap:8px;justify-content:center;margin:16px 0}
+  .reel{width:100px;height:100px;background:var(--dark2);border:2px solid var(--border);border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:48px;position:relative;overflow:hidden;transition:all 0.1s}
+  .reel.spinning{animation:spin-flash 0.12s ease infinite alternate}
+  @keyframes spin-flash{from{transform:scaleY(0.95);opacity:0.7}to{transform:scaleY(1.05);opacity:1}}
+  .reel.win{border-color:var(--gold2);box-shadow:0 0 12px rgba(201,162,39,0.4)}
+  .payline{height:3px;background:rgba(201,162,39,0.3);margin:8px 0;border-radius:2px}
+  .payline.active{background:var(--gold);box-shadow:0 0 6px var(--gold)}
+  .bet-row{display:flex;align-items:center;gap:10px;justify-content:center;margin:10px 0}
+  .bet-display{background:var(--dark3);border:1px solid var(--border);padding:6px 20px;border-radius:3px;font-family:'Cinzel',serif;color:var(--gold);min-width:90px;text-align:center;font-size:14px}
+  .spin-btn{font-size:13px;padding:12px 36px;font-weight:700;letter-spacing:2px;border-radius:4px}
+  .spin-btn:disabled{opacity:0.5;cursor:not-allowed}
+  .result-display{height:44px;display:flex;align-items:center;justify-content:center;font-family:'Cinzel',serif;font-size:15px;letter-spacing:1px;transition:all 0.3s}
+  .result-win{color:var(--gold2)}
+  .result-loss{color:var(--text2)}
+  .result-jackpot{color:var(--gold);font-size:20px;animation:jackpot-pulse 0.5s ease infinite alternate}
+  @keyframes jackpot-pulse{from{transform:scale(0.95)}to{transform:scale(1.05)}}
+
+  .paytable{background:var(--panel2);border:1px solid var(--border);border-radius:8px;padding:16px;width:100%;max-width:600px}
+  .paytable-title{font-family:'Cinzel',serif;font-size:11px;letter-spacing:3px;color:var(--text2);margin-bottom:10px}
+  .pt-row{display:flex;justify-content:space-between;align-items:center;padding:4px 0;border-bottom:1px solid rgba(255,255,255,0.04);font-size:13px}
+  .pt-row:last-child{border-bottom:none}
+  .pt-symbols{font-size:18px;letter-spacing:2px}
+  .pt-mult{color:var(--gold);font-family:'Cinzel',serif;font-size:12px}
+
+  .slot-layout{display:flex;gap:16px;justify-content:center;flex-wrap:wrap}
+  .side-panel{background:var(--panel);border:1px solid var(--border);border-radius:8px;padding:16px;width:200px;min-width:160px}
+  .side-title{font-family:'Cinzel',serif;font-size:10px;letter-spacing:3px;color:var(--text2);margin-bottom:12px}
+  .stat-row{display:flex;justify-content:space-between;padding:4px 0;font-size:13px;border-bottom:1px solid rgba(255,255,255,0.04)}
+  .stat-val{color:var(--gold);font-family:'Cinzel',serif;font-size:12px}
+  .stat-val.red{color:#e74c3c}
+  .stat-val.green{color:#2ecc71}
+  .history-list{display:flex;flex-direction:column;gap:3px;max-height:220px;overflow-y:auto}
+  .hist-item{font-size:11px;padding:2px 4px;border-radius:2px;font-family:'Crimson Pro',serif;display:flex;justify-content:space-between}
+  .hist-item.win{color:#2ecc71}
+  .hist-item.loss{color:var(--text2)}
+  .hist-item.jackpot{color:var(--gold);font-weight:600}
+  .hist-item.partial{color:#5dade2}
+
+  .mode-banner{padding:6px 14px;border-radius:3px;font-family:'Cinzel',serif;font-size:10px;letter-spacing:2px;text-align:center;margin-bottom:8px}
+  .mode-normal{background:rgba(30,132,73,0.2);border:1px solid var(--teal);color:#2ecc71}
+  .mode-small-wins{background:rgba(26,82,118,0.3);border:1px solid var(--blue);color:#5dade2}
+  .mode-ups-downs{background:rgba(120,40,31,0.3);border:1px solid var(--red);color:#e74c3c}
+  .mode-jackpot{background:rgba(113,125,16,0.3);border:1px solid var(--gold3);color:var(--gold2)}
+
+  .admin-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:16px;margin-bottom:20px}
+  .admin-card{background:var(--panel);border:1px solid var(--border);border-radius:8px;padding:20px}
+  .admin-card-title{font-family:'Cinzel',serif;font-size:11px;letter-spacing:3px;color:var(--gold2);margin-bottom:14px;padding-bottom:8px;border-bottom:1px solid var(--border)}
+  .kpi-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+  .kpi{background:var(--dark3);border-radius:6px;padding:10px 12px}
+  .kpi-label{font-size:10px;letter-spacing:2px;color:var(--text2);margin-bottom:4px;font-family:'Cinzel',serif}
+  .kpi-value{font-family:'Cinzel',serif;font-size:18px;color:var(--gold)}
+  .kpi-value.pos{color:#2ecc71}
+  .kpi-value.neg{color:#e74c3c}
+  .prob-row{display:flex;align-items:center;gap:8px;margin-bottom:8px}
+  .prob-slider{flex:1;accent-color:var(--gold)}
+  .prob-val{font-family:'Cinzel',serif;font-size:11px;color:var(--gold);min-width:36px;text-align:right}
+  .template-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+  .tpl-btn{background:var(--dark3);border:1px solid var(--border);border-radius:4px;padding:10px;cursor:pointer;transition:all 0.2s;text-align:left;color:var(--text)}
+  .tpl-btn:hover{border-color:var(--gold);background:rgba(201,162,39,0.08)}
+  .tpl-btn.active{border-color:var(--gold2);background:rgba(201,162,39,0.15)}
+  .tpl-btn-name{font-family:'Cinzel',serif;font-size:10px;letter-spacing:1px;color:var(--gold);margin-bottom:3px}
+  .tpl-btn-desc{font-size:11px;color:var(--text2);line-height:1.3}
+  .leaderboard-table{width:100%;border-collapse:collapse;font-size:13px}
+  .leaderboard-table th{font-family:'Cinzel',serif;font-size:10px;letter-spacing:2px;color:var(--text2);padding:6px 8px;border-bottom:1px solid var(--border);text-align:left;font-weight:400}
+  .leaderboard-table td{padding:7px 8px;border-bottom:1px solid rgba(255,255,255,0.04)}
+  .rank-1{color:var(--gold2)}
+  .rank-2{color:#BDC3C7}
+  .rank-3{color:#CD7F32}
+  .activity-list{display:flex;flex-direction:column;gap:4px;max-height:220px;overflow-y:auto}
+  .act-item{display:flex;justify-content:space-between;align-items:center;padding:5px 8px;border-radius:3px;background:var(--dark3);font-size:12px}
+  .act-user{color:var(--text2)}
+  .act-result.win{color:#2ecc71}
+  .act-result.loss{color:#e74c3c}
+  .act-result.jackpot{color:var(--gold2)}
+  .act-result.partial{color:#5dade2}
+  .house-edge-bar{height:8px;background:var(--dark3);border-radius:4px;overflow:hidden;margin-top:6px}
+  .house-edge-fill{height:100%;background:linear-gradient(90deg,var(--gold3),var(--gold2));border-radius:4px;transition:width 0.5s}
+  .rtp-note{font-size:11px;color:var(--text2);margin-top:4px;font-style:italic}
+  .section-tabs{display:flex;gap:0;border-bottom:1px solid var(--border);margin-bottom:16px}
+  .admin-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:16px;flex-wrap:wrap;gap:10px}
+  .admin-title{font-family:'Cinzel',serif;font-size:20px;color:var(--gold)}
+  .admin-sub{font-size:12px;color:var(--text2);font-style:italic;margin-top:2px}
+  .ornament{color:var(--gold3);font-size:13px;letter-spacing:4px;text-align:center}
+  .jackpot-remaining{font-size:11px;color:var(--gold2);font-style:italic;margin-top:2px;text-align:center}
+
+  @media(max-width:600px){
+    .reel{width:80px;height:80px;font-size:36px}
+    .slot-layout{flex-direction:column;align-items:center}
+    .side-panel{width:100%;max-width:600px}
+    .login-title{font-size:26px}
+    .admin-grid{grid-template-columns:1fr}
+    .kpi-grid{grid-template-columns:1fr 1fr}
+    .section-tabs{overflow-x:auto}
+  }
+</style>
+</head>
+<body>
+
+<div class="nav" id="nav">
+  <div class="nav-logo">MAHKOTA SLOTS<span>BRUNEI DARUSSALAM</span></div>
+  <div class="nav-right" id="nav-right">
+    <button class="btn" onclick="showLogin()">Login</button>
+    <button class="btn btn-gold" onclick="showRegister()">Register</button>
+  </div>
+</div>
+
+<!-- LOGIN SCREEN -->
+<div class="screen active" id="screen-login">
+  <div class="login-wrap">
+    <div style="text-align:center">
+      <div class="login-title">🕌 MAHKOTA SLOTS</div>
+      <div class="ornament">✦ ✦ ✦</div>
+      <div class="login-subtitle">Brunei's Premier Virtual Casino Experience</div>
+    </div>
+    <div class="login-card" id="login-form">
+      <div>
+        <label class="form-label">Username</label>
+        <input class="form-input" id="login-user" placeholder="Enter username" value="player1">
+      </div>
+      <div>
+        <label class="form-label">Password</label>
+        <input class="form-input" type="password" id="login-pass" placeholder="Enter password" value="123456">
+      </div>
+      <button class="btn btn-gold" style="width:100%;padding:10px" onclick="doLogin()">ENTER THE VAULT</button>
+      <div class="login-hint">No account? <span onclick="showRegister()">Register here</span></div>
+      <div class="login-hint">Admin? <span onclick="doAdminLogin()">Login as admin</span></div>
+      <div class="login-hint" style="font-size:11px;border-top:1px solid var(--border);padding-top:8px">
+        Demo: player1 / 123456 &nbsp;|&nbsp; admin / admin123
+      </div>
+    </div>
+    <div class="login-card" id="register-form" style="display:none">
+      <div>
+        <label class="form-label">Choose Username</label>
+        <input class="form-input" id="reg-user" placeholder="e.g. SultanLucky88">
+      </div>
+      <div>
+        <label class="form-label">Password</label>
+        <input class="form-input" type="password" id="reg-pass" placeholder="Min 6 characters">
+      </div>
+      <div style="font-size:12px;color:var(--text2);padding:6px;background:var(--dark3);border-radius:3px;font-style:italic">
+        New account starts with <span style="color:var(--gold)">BND 1,000.00</span> virtual balance
+      </div>
+      <button class="btn btn-gold" style="width:100%;padding:10px" onclick="doRegister()">CREATE ACCOUNT</button>
+      <div class="login-hint"><span onclick="showLogin()">← Back to login</span></div>
+    </div>
+  </div>
+</div>
+
+<!-- SLOT SCREEN -->
+<div class="screen" id="screen-slot">
+  <div id="mode-banner-slot" class="mode-banner mode-normal" style="max-width:600px;margin:0 auto 12px">NORMAL MODE</div>
+  <div class="slot-layout">
+    <div style="display:flex;flex-direction:column;align-items:center;gap:12px">
+      <div class="slot-machine">
+        <div class="machine-title">⚜ MAHKOTA SLOTS ⚜</div>
+        <div class="machine-sub">BRUNEI DARUSSALAM</div>
+        <div class="payline"></div>
+        <div class="reels-container" id="reels-container">
+          <div class="reel" id="reel-0">🕌</div>
+          <div class="reel" id="reel-1">🦅</div>
+          <div class="reel" id="reel-2">🌺</div>
+        </div>
+        <div class="payline active"></div>
+        <div class="payline"></div>
+        <div class="result-display result-loss" id="result-display">— Place your bet and spin —</div>
+        <div class="bet-row">
+          <button class="btn" onclick="adjustBet(-5)">−</button>
+          <span class="bet-display" id="bet-display">BND 10</span>
+          <button class="btn" onclick="adjustBet(5)">+</button>
+          <button class="btn" onclick="adjustBet(-999)">MIN</button>
+          <button class="btn" onclick="adjustBet(999)">MAX</button>
+        </div>
+        <div style="display:flex;justify-content:center;gap:10px;margin-top:6px">
+          <button class="btn btn-gold spin-btn" id="spin-btn" onclick="doSpin()">🎰 SPIN</button>
+          <button class="btn spin-btn" id="auto-btn" onclick="doAutoSpin()">AUTO</button>
+        </div>
+        <div id="jackpot-remaining" class="jackpot-remaining" style="display:none"></div>
+      </div>
+
+      <div class="paytable">
+        <div class="paytable-title">⚜ PAYTABLE</div>
+        <div class="pt-row"><span class="pt-symbols">🕌🕌🕌</span><span style="color:var(--text2);font-size:11px">Omar Ali Mosque</span><span class="pt-mult">×50 JACKPOT</span></div>
+        <div class="pt-row"><span class="pt-symbols">🦅🦅🦅</span><span style="color:var(--text2);font-size:11px">Royal Crest</span><span class="pt-mult">×20</span></div>
+        <div class="pt-row"><span class="pt-symbols">👑👑👑</span><span style="color:var(--text2);font-size:11px">Sultan's Crown</span><span class="pt-mult">×15</span></div>
+        <div class="pt-row"><span class="pt-symbols">🌺🌺🌺</span><span style="color:var(--text2);font-size:11px">Simpor Flower</span><span class="pt-mult">×8</span></div>
+        <div class="pt-row"><span class="pt-symbols">🏝️🏝️🏝️</span><span style="color:var(--text2);font-size:11px">Brunei Bay</span><span class="pt-mult">×5</span></div>
+        <div class="pt-row"><span class="pt-symbols">🛢️🛢️🛢️</span><span style="color:var(--text2);font-size:11px">Oil Barrel</span><span class="pt-mult">×4</span></div>
+        <div class="pt-row"><span class="pt-symbols">🎋🎋🎋</span><span style="color:var(--text2);font-size:11px">Bamboo</span><span class="pt-mult">×3</span></div>
+        <div class="pt-row"><span class="pt-symbols">Any 2 match</span><span style="color:var(--text2);font-size:11px">Partial</span><span class="pt-mult">×1.2</span></div>
+      </div>
+    </div>
+
+    <div style="display:flex;flex-direction:column;gap:12px">
+      <div class="side-panel">
+        <div class="side-title">SESSION STATS</div>
+        <div class="stat-row"><span>Spins</span><span class="stat-val" id="st-spins">0</span></div>
+        <div class="stat-row"><span>Total Bet</span><span class="stat-val" id="st-bet">BND 0</span></div>
+        <div class="stat-row"><span>Total Won</span><span class="stat-val green" id="st-won">BND 0</span></div>
+        <div class="stat-row"><span>Net P&L</span><span class="stat-val" id="st-pnl">BND 0</span></div>
+        <div class="stat-row"><span>Win Rate</span><span class="stat-val" id="st-rate">—</span></div>
+        <div class="stat-row"><span>RTP</span><span class="stat-val" id="st-rtp">—</span></div>
+      </div>
+      <div class="side-panel">
+        <div class="side-title">LAST 20 SPINS</div>
+        <div class="history-list" id="history-list"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ADMIN SCREEN -->
+<div class="screen" id="screen-admin">
+  <div class="admin-header">
+    <div>
+      <div class="admin-title">⚙ Admin Dashboard</div>
+      <div class="admin-sub">Mahkota Slots — House Control Panel</div>
+    </div>
+    <div style="display:flex;gap:8px">
+      <button class="btn" onclick="resetAllStats()">Reset Stats</button>
+      <button class="btn btn-red" onclick="logout()">Logout</button>
+    </div>
+  </div>
+
+  <div class="section-tabs">
+    <button class="tab-btn active" onclick="adminTab('overview')" id="tab-overview">Overview</button>
+    <button class="tab-btn" onclick="adminTab('probability')" id="tab-probability">Probability</button>
+    <button class="tab-btn" onclick="adminTab('players')" id="tab-players">Players</button>
+    <button class="tab-btn" onclick="adminTab('theory')" id="tab-theory">Math Theory</button>
+  </div>
+
+  <div id="admin-overview">
+    <div class="kpi-grid" style="margin-bottom:16px">
+      <div class="kpi"><div class="kpi-label">TOTAL SPINS</div><div class="kpi-value" id="k-spins">0</div></div>
+      <div class="kpi"><div class="kpi-label">HOUSE PROFIT</div><div class="kpi-value pos" id="k-profit">BND 0</div></div>
+      <div class="kpi"><div class="kpi-label">TOTAL BETS</div><div class="kpi-value" id="k-bets">BND 0</div></div>
+      <div class="kpi"><div class="kpi-label">ACTUAL RTP</div><div class="kpi-value" id="k-rtp">—</div></div>
+    </div>
+    <div class="admin-grid">
+      <div class="admin-card">
+        <div class="admin-card-title">HOUSE EDGE VISUALIZER</div>
+        <div style="font-size:13px;color:var(--text2);margin-bottom:8px">Expected RTP vs Actual RTP</div>
+        <div style="display:flex;justify-content:space-between;font-size:12px;margin-bottom:4px">
+          <span>Expected RTP</span><span style="color:var(--gold);font-family:'Cinzel',serif" id="expected-rtp-disp">94%</span>
+        </div>
+        <div class="house-edge-bar"><div class="house-edge-fill" id="exp-rtp-bar" style="width:94%"></div></div>
+        <div style="display:flex;justify-content:space-between;font-size:12px;margin-bottom:4px;margin-top:10px">
+          <span>Actual RTP</span><span style="color:#2ecc71;font-family:'Cinzel',serif" id="actual-rtp-disp">—</span>
+        </div>
+        <div class="house-edge-bar"><div class="house-edge-fill" id="act-rtp-bar" style="width:0%;background:linear-gradient(90deg,#1a5276,#2980b9)"></div></div>
+        <div class="rtp-note">House edge = 100% − RTP. Lower RTP = more profit for the house.</div>
+        <div style="margin-top:10px;padding:8px;background:var(--dark3);border-radius:4px">
+          <div style="font-size:10px;letter-spacing:2px;color:var(--text2);font-family:'Cinzel',serif;margin-bottom:6px">OUTCOME BREAKDOWN</div>
+          <div id="outcome-breakdown" style="font-size:12px;color:var(--text2)">No data yet</div>
+        </div>
+      </div>
+      <div class="admin-card">
+        <div class="admin-card-title">ACTIVE MODE</div>
+        <div id="active-mode-disp" style="margin-bottom:12px"></div>
+        <div class="admin-card-title" style="margin-top:12px">QUICK TEMPLATES</div>
+        <div class="template-grid">
+          <div class="tpl-btn active" id="tpl-normal" onclick="setTemplate('normal')">
+            <div class="tpl-btn-name">NORMAL</div>
+            <div class="tpl-btn-desc">Balanced casino mode. ~94% RTP</div>
+          </div>
+          <div class="tpl-btn" id="tpl-small" onclick="setTemplate('small_wins')">
+            <div class="tpl-btn-name">SMALL WINS</div>
+            <div class="tpl-btn-desc">Players win often but small. Builds engagement.</div>
+          </div>
+          <div class="tpl-btn" id="tpl-ups" onclick="setTemplate('ups_downs')">
+            <div class="tpl-btn-name">UPS & DOWNS</div>
+            <div class="tpl-btn-desc">High highs, low lows. Emotional rollercoaster.</div>
+          </div>
+          <div class="tpl-btn" id="tpl-jackpot" onclick="setTemplate('jackpot')">
+            <div class="tpl-btn-name">JACKPOT TIME</div>
+            <div class="tpl-btn-desc">2 jackpots + 80 losses in next 100 spins.</div>
+          </div>
+        </div>
+        <div id="jackpot-queue-disp" style="font-size:12px;color:var(--gold2);margin-top:8px;font-style:italic;display:none"></div>
+      </div>
+    </div>
+    <div class="admin-card">
+      <div class="admin-card-title">RECENT GLOBAL ACTIVITY</div>
+      <div class="activity-list" id="activity-list"></div>
+    </div>
+  </div>
+
+  <div id="admin-probability" style="display:none">
+    <div class="admin-card" style="max-width:560px">
+      <div class="admin-card-title">OUTCOME PROBABILITY CONTROLS</div>
+      <div style="font-size:12px;color:var(--text2);margin-bottom:14px;font-style:italic">
+        Adjust probability weights for each outcome. Higher weight = more frequent. Values are relative weights (not percentages).
+      </div>
+      <div id="prob-controls"></div>
+      <div style="margin-top:12px;padding:10px;background:var(--dark3);border-radius:4px">
+        <div style="font-size:10px;letter-spacing:2px;color:var(--text2);font-family:'Cinzel',serif;margin-bottom:6px">CALCULATED EXPECTED RTP</div>
+        <div id="calc-rtp-disp" style="font-family:'Cinzel',serif;font-size:20px;color:var(--gold)">—</div>
+        <div style="font-size:11px;color:var(--text2);margin-top:4px">House edge: <span id="calc-edge-disp" style="color:#e74c3c">—</span></div>
+      </div>
+      <button class="btn btn-gold" style="width:100%;margin-top:12px;padding:10px" onclick="applyProbabilities()">APPLY CHANGES</button>
+    </div>
+  </div>
+
+  <div id="admin-players" style="display:none">
+    <div class="admin-grid">
+      <div class="admin-card">
+        <div class="admin-card-title">LEADERBOARD</div>
+        <table class="leaderboard-table">
+          <thead><tr><th>#</th><th>Player</th><th>Balance</th><th>Spins</th><th>Net P&L</th></tr></thead>
+          <tbody id="leaderboard-body"></tbody>
+        </table>
+      </div>
+      <div class="admin-card">
+        <div class="admin-card-title">PLAYER DETAILS</div>
+        <div id="player-details" style="font-size:13px;color:var(--text2)">Select a player from the leaderboard.</div>
+      </div>
+    </div>
+  </div>
+
+  <div id="admin-theory" style="display:none">
+    <div class="admin-card">
+      <div class="admin-card-title">THE MATHEMATICS OF SLOTS</div>
+      <div style="font-size:14px;line-height:1.8;color:var(--text2);display:flex;flex-direction:column;gap:14px">
+        <p><span style="color:var(--gold);font-family:'Cinzel',serif">Expected Value (EV)</span><br>
+        The fundamental formula: EV = Σ(P(outcome) × payout). For the house to profit, EV must be negative for the player. Every spin, the casino extracts the house edge.</p>
+        <p><span style="color:var(--gold);font-family:'Cinzel',serif">Return to Player (RTP)</span><br>
+        RTP is the long-run percentage of all bets returned to players. A 94% RTP means for every BND 100 wagered, players receive BND 94 back on average — the house keeps BND 6 (6% house edge).</p>
+        <p><span style="color:var(--gold);font-family:'Cinzel',serif">Law of Large Numbers</span><br>
+        Individual spins are volatile — a player can win big in a single session. But over thousands of spins, actual RTP converges to the theoretical RTP. The house edge is mathematically guaranteed over time.</p>
+        <p><span style="color:var(--gold);font-family:'Cinzel',serif">Variance & Volatility</span><br>
+        High-variance slots (Ups & Downs mode) have bigger swings but the same house edge. Low-variance slots (Small Wins mode) give frequent small wins. Both yield the same long-run profit — variance only affects the shape of the loss curve.</p>
+        <p><span style="color:var(--gold);font-family:'Cinzel',serif">The Gambler's Fallacy</span><br>
+        Each spin is statistically independent. A losing streak does not increase the probability of the next win. Jackpot Time mode demonstrates this: even with 2 forced jackpots in 100 spins, the remaining losses ensure the house maintains its edge.</p>
+        <p><span style="color:var(--gold);font-family:'Cinzel',serif">Configuration Power</span><br>
+        The admin panel demonstrates what casino operators control: symbol probabilities, payout multipliers, and forced outcome sequences. Players see spinning reels; operators see a mathematical engine designed to profit in the long run.</p>
+        <div style="padding:12px;background:var(--dark3);border-radius:4px;border-left:3px solid var(--gold3)">
+          <span style="font-family:'Cinzel',serif;color:var(--gold);font-size:11px;letter-spacing:1px">PAPER REFERENCE</span><br>
+          <span style="font-size:12px;font-style:italic">Harrigan, K. A., & Dixon, M. (2009). The mathematics of slots: Configurations, combinations, probabilities. UNLV Gaming Research & Review Journal, 13(2), 33–54.</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+const SYMBOLS=['🕌','🦅','👑','🌺','🏝️','🛢️','🎋'];
+const PAYOUTS={'🕌🕌🕌':50,'🦅🦅🦅':20,'👑👑👑':15,'🌺🌺🌺':8,'🏝️🏝️🏝️':5,'🛢️🛢️🛢️':4,'🎋🎋🎋':3};
+const PARTIAL_MULT=1.2;
+
+let players={
+  player1:{password:'123456',balance:1000,spins:0,totalBet:0,totalWon:0,history:[],wins:0},
+  admin:{password:'admin123',balance:0,spins:0,totalBet:0,totalWon:0,history:[],wins:0}
+};
+let globalStats={spins:0,totalBet:0,totalWon:0,outcomes:{jackpot:0,win:0,partial:0,loss:0},activity:[]};
+let currentUser=null,isAdmin=false,currentBet=10,spinning=false,autoSpinTimer=null,isAutoSpinning=false;
+let weights=[1,3,4,8,10,12,15];
+let currentMode='normal';
+let jackpotQueue=[],jackpotQueuePos=0;
+
+function weightedRand(wts){
+  const total=wts.reduce((a,b)=>a+b,0);
+  let r=Math.random()*total;
+  for(let i=0;i<wts.length;i++){r-=wts[i];if(r<=0)return i;}
+  return wts.length-1;
+}
+
+function spinReels(){
+  if(jackpotQueue.length>0&&jackpotQueuePos<jackpotQueue.length){
+    const forced=jackpotQueue[jackpotQueuePos++];
+    if(jackpotQueuePos>=jackpotQueue.length){jackpotQueue=[];jackpotQueuePos=0;setTemplate('normal',true);}
+    return forced;
+  }
+  return[weightedRand(weights),weightedRand(weights),weightedRand(weights)];
+}
+
+function calcExpectedRTP(){
+  const total=weights.reduce((a,b)=>a+b,0);
+  const w=weights.map(v=>v/total);
+  let ev=0;
+  for(let i=0;i<SYMBOLS.length;i++){
+    const p3=w[i]*w[i]*w[i];
+    const sym=SYMBOLS[i];
+    const mult=PAYOUTS[sym+sym+sym]||0;
+    ev+=p3*mult;
+  }
+  for(let i=0;i<SYMBOLS.length;i++){
+    for(let j=0;j<SYMBOLS.length;j++){
+      if(i===j)continue;
+      const p=w[i]*w[i]*w[j]*3;
+      ev+=p*PARTIAL_MULT;
+    }
+  }
+  return Math.min(ev,0.98);
+}
+
+function showLogin(){document.getElementById('login-form').style.display='flex';document.getElementById('login-form').style.flexDirection='column';document.getElementById('register-form').style.display='none';}
+function showRegister(){document.getElementById('register-form').style.display='flex';document.getElementById('register-form').style.flexDirection='column';document.getElementById('login-form').style.display='none';}
+
+function doLogin(){
+  const u=document.getElementById('login-user').value.trim();
+  const p=document.getElementById('login-pass').value;
+  if(!players[u]){alert('User not found.');return;}
+  if(players[u].password!==p){alert('Wrong password.');return;}
+  if(u==='admin'){doAdminLogin();return;}
+  loginAs(u,false);
+}
+
+function doAdminLogin(){
+  const passEl=document.getElementById('login-pass');
+  const p=passEl?passEl.value:'';
+  if(p&&p!=='admin123'){alert('Wrong admin password.');return;}
+  isAdmin=true;currentUser='admin';
+  document.getElementById('nav-right').innerHTML=`<span style="font-size:12px;color:var(--text2);font-style:italic">Admin</span><button class="btn btn-red" onclick="logout()">Logout</button>`;
+  showScreen('admin');
+  renderAdminOverview();renderProbControls();renderLeaderboard();renderActivity();
+  setTemplate('normal',true);
+}
+
+function doRegister(){
+  const u=document.getElementById('reg-user').value.trim();
+  const p=document.getElementById('reg-pass').value;
+  if(!u||u.length<3){alert('Username must be at least 3 characters.');return;}
+  if(players[u]){alert('Username already taken.');return;}
+  if(p.length<6){alert('Password must be at least 6 characters.');return;}
+  players[u]={password:p,balance:1000,spins:0,totalBet:0,totalWon:0,history:[],wins:0};
+  alert('Account created! Welcome, '+u+'!');
+  document.getElementById('login-user').value=u;
+  document.getElementById('login-pass').value=p;
+  showLogin();
+}
+
+function loginAs(u){
+  currentUser=u;isAdmin=false;
+  const bal=players[u].balance.toFixed(2);
+  document.getElementById('nav-right').innerHTML=`
+    <span class="nav-balance">BND ${parseFloat(bal).toLocaleString('en',{minimumFractionDigits:2})}</span>
+    <button class="btn" onclick="showScreen('slot')">Play</button>
+    <button class="btn btn-red" onclick="logout()">Logout</button>`;
+  showScreen('slot');
+  updateSlotUI();
+}
+
+function logout(){
+  currentUser=null;isAdmin=false;spinning=false;isAutoSpinning=false;
+  if(autoSpinTimer){clearTimeout(autoSpinTimer);autoSpinTimer=null;}
+  document.getElementById('nav-right').innerHTML=`<button class="btn" onclick="showLogin()">Login</button><button class="btn btn-gold" onclick="showRegister()">Register</button>`;
+  showScreen('login');
+}
+
+function showScreen(s){
+  document.querySelectorAll('.screen').forEach(e=>e.classList.remove('active'));
+  document.getElementById('screen-'+s).classList.add('active');
+}
+
+function adjustBet(d){
+  if(d==-999)currentBet=5;
+  else if(d==999)currentBet=Math.min(100,Math.floor(players[currentUser].balance));
+  else currentBet=Math.max(5,Math.min(100,currentBet+d));
+  document.getElementById('bet-display').textContent='BND '+currentBet;
+}
+
+function doSpin(){
+  if(spinning||!currentUser||isAdmin)return;
+  const p=players[currentUser];
+  if(p.balance<currentBet){setResult('Insufficient balance!','loss');return;}
+  spinning=true;
+  document.getElementById('spin-btn').disabled=true;
+  p.balance-=currentBet;p.totalBet+=currentBet;p.spins++;
+  globalStats.spins++;globalStats.totalBet+=currentBet;
+  updateNavBalance();
+  const r0=document.getElementById('reel-0'),r1=document.getElementById('reel-1'),r2=document.getElementById('reel-2');
+  [r0,r1,r2].forEach(r=>r.classList.add('spinning'));
+  setResult('Spinning...','');
+  const result=spinReels();
+  const interval=setInterval(()=>{
+    r0.textContent=SYMBOLS[Math.floor(Math.random()*SYMBOLS.length)];
+    r1.textContent=SYMBOLS[Math.floor(Math.random()*SYMBOLS.length)];
+    r2.textContent=SYMBOLS[Math.floor(Math.random()*SYMBOLS.length)];
+  },80);
+  setTimeout(()=>{
+    clearInterval(interval);
+    [r0,r1,r2].forEach(r=>r.classList.remove('spinning'));
+    r0.textContent=SYMBOLS[result[0]];r1.textContent=SYMBOLS[result[1]];r2.textContent=SYMBOLS[result[2]];
+    const s0=SYMBOLS[result[0]],s1=SYMBOLS[result[1]],s2=SYMBOLS[result[2]];
+    const key=s0+s1+s2;
+    let payout=0,type='loss',msg='';
+    if(PAYOUTS[key]){
+      payout=currentBet*PAYOUTS[key];
+      type=PAYOUTS[key]>=20?'jackpot':'win';
+      msg=type==='jackpot'?'🎉 JACKPOT! +BND '+payout.toFixed(2):'WIN! ×'+PAYOUTS[key]+' → +BND '+payout.toFixed(2);
+      [r0,r1,r2].forEach(r=>r.classList.add('win'));
+      globalStats.outcomes[type]=(globalStats.outcomes[type]||0)+1;
+      p.wins++;
+    } else {
+      const syms=[s0,s1,s2];const counts={};syms.forEach(s=>counts[s]=(counts[s]||0)+1);
+      const maxMatch=Math.max(...Object.values(counts));
+      if(maxMatch>=2&&SYMBOLS.indexOf(s0)<5){
+        payout=currentBet*PARTIAL_MULT;type='partial';
+        msg='Partial match → +BND '+payout.toFixed(2);
+        globalStats.outcomes.partial=(globalStats.outcomes.partial||0)+1;
+        p.wins++;
+      } else {
+        msg='No match. −BND '+currentBet.toFixed(2);
+        globalStats.outcomes.loss=(globalStats.outcomes.loss||0)+1;
+      }
+    }
+    p.balance+=payout;p.totalWon+=payout;globalStats.totalWon+=payout;
+    updateNavBalance();
+    if(type!=='jackpot')[r0,r1,r2].forEach(r=>r.classList.remove('win'));
+    setResult(msg,type);
+    addHistory(s0+s1+s2,payout-currentBet,type);
+    updateSessionStats();
+    addActivity(currentUser,s0+s1+s2,payout-currentBet,type);
+    updateJackpotRemaining();
+    spinning=false;
+    document.getElementById('spin-btn').disabled=false;
+    setTimeout(()=>[r0,r1,r2].forEach(r=>r.classList.remove('win')),800);
+  },800+Math.random()*400);
+}
+
+function setResult(msg,type){
+  const el=document.getElementById('result-display');
+  el.textContent=msg;el.className='result-display';
+  if(type==='win'||type==='partial')el.classList.add('result-win');
+  else if(type==='jackpot')el.classList.add('result-jackpot');
+  else el.classList.add('result-loss');
+}
+
+function addHistory(sym,net,type){
+  const p=players[currentUser];
+  p.history.unshift({sym,net,type});
+  if(p.history.length>50)p.history.pop();
+  document.getElementById('history-list').innerHTML=p.history.slice(0,20).map(h=>`
+    <div class="hist-item ${h.type}"><span>${h.sym}</span><span>${h.net>=0?'+':''}BND ${h.net.toFixed(2)}</span></div>`).join('');
+}
+
+function updateSessionStats(){
+  const p=players[currentUser];
+  const net=p.totalWon-p.totalBet;
+  document.getElementById('st-spins').textContent=p.spins;
+  document.getElementById('st-bet').textContent='BND '+p.totalBet.toFixed(0);
+  document.getElementById('st-won').textContent='BND '+p.totalWon.toFixed(0);
+  const pnlEl=document.getElementById('st-pnl');
+  pnlEl.textContent=(net>=0?'+':'')+' BND '+net.toFixed(2);
+  pnlEl.className='stat-val '+(net>=0?'green':'red');
+  document.getElementById('st-rate').textContent=p.spins>0?((p.wins/p.spins)*100).toFixed(0)+'%':'—';
+  document.getElementById('st-rtp').textContent=p.totalBet>0?((p.totalWon/p.totalBet)*100).toFixed(1)+'%':'—';
+}
+
+function updateNavBalance(){
+  const b=players[currentUser].balance;
+  const el=document.querySelector('.nav-balance');
+  if(el)el.textContent='BND '+b.toLocaleString('en',{minimumFractionDigits:2,maximumFractionDigits:2});
+}
+
+function doAutoSpin(){
+  if(isAutoSpinning){
+    isAutoSpinning=false;
+    document.getElementById('auto-btn').textContent='AUTO';
+    return;
+  }
+  isAutoSpinning=true;
+  document.getElementById('auto-btn').textContent='STOP';
+  const run=()=>{
+    if(!isAutoSpinning||!currentUser){isAutoSpinning=false;document.getElementById('auto-btn').textContent='AUTO';return;}
+    if(players[currentUser].balance<currentBet){isAutoSpinning=false;document.getElementById('auto-btn').textContent='AUTO';return;}
+    doSpin();
+    autoSpinTimer=setTimeout(run,1600);
+  };
+  run();
+}
+
+function updateJackpotRemaining(){
+  const el=document.getElementById('jackpot-remaining');
+  const qd=document.getElementById('jackpot-queue-disp');
+  if(jackpotQueue.length>0&&jackpotQueuePos<jackpotQueue.length){
+    const rem=jackpotQueue.length-jackpotQueuePos;
+    if(el){el.style.display='block';el.textContent='Jackpot Time: '+rem+' spins remaining';}
+    if(qd){qd.style.display='block';qd.textContent='Active queue: '+rem+' spins remaining';}
+  } else {
+    if(el)el.style.display='none';
+    if(qd)qd.style.display='none';
+  }
+}
+
+function setTemplate(tpl,silent){
+  currentMode=tpl;
+  const mb=document.getElementById('mode-banner-slot');
+  document.querySelectorAll('.tpl-btn').forEach(b=>b.classList.remove('active'));
+  const map={normal:'tpl-normal',small_wins:'tpl-small',ups_downs:'tpl-ups',jackpot:'tpl-jackpot'};
+  if(map[tpl]){const el=document.getElementById(map[tpl]);if(el)el.classList.add('active');}
+  if(tpl==='normal'){
+    weights=[1,3,4,8,10,12,15];jackpotQueue=[];jackpotQueuePos=0;
+    if(mb){mb.className='mode-banner mode-normal';mb.textContent='NORMAL MODE';}
+    showActiveModeDisp('Normal Mode — Balanced casino setup (~94% RTP)');
+  } else if(tpl==='small_wins'){
+    weights=[0.2,1,2,15,18,20,25];jackpotQueue=[];jackpotQueuePos=0;
+    if(mb){mb.className='mode-banner mode-small-wins';mb.textContent='SMALL WINS MODE';}
+    showActiveModeDisp('Small Wins Mode — Frequent small payouts, high engagement');
+  } else if(tpl==='ups_downs'){
+    weights=[2,5,6,5,8,10,8];jackpotQueue=[];jackpotQueuePos=0;
+    if(mb){mb.className='mode-banner mode-ups-downs';mb.textContent='UPS & DOWNS MODE';}
+    showActiveModeDisp('Ups & Downs Mode — High variance, volatile outcomes');
+  } else if(tpl==='jackpot'){
+    const jackpotSpin=[0,0,0];
+    const lossSpin=()=>{let a,b,c;do{a=3+Math.floor(Math.random()*4);b=3+Math.floor(Math.random()*4);c=3+Math.floor(Math.random()*4);}while(a===b&&b===c);return[a,b,c];};
+    const smallWin=()=>{const i=2+Math.floor(Math.random()*3);return[i,i,6];};
+    let q=[];
+    for(let i=0;i<100;i++){
+      if(i===15)q.push([...jackpotSpin]);
+      else if(i===60)q.push([...jackpotSpin]);
+      else if([5,20,35,50,70,80].includes(i))q.push(smallWin());
+      else q.push(lossSpin());
+    }
+    jackpotQueue=q;jackpotQueuePos=0;
+    if(mb){mb.className='mode-banner mode-jackpot';mb.textContent='⚜ JACKPOT TIME ⚜';}
+    showActiveModeDisp('Jackpot Time — 100-spin controlled sequence with 2 jackpots');
+  }
+  updateProbControlDisplay();updateCalcRTP();
+  if(!silent){updateExpectedRTPDisp();updateJackpotRemaining();}
+}
+
+function showActiveModeDisp(text){
+  const el=document.getElementById('active-mode-disp');
+  if(el)el.innerHTML=`<div style="padding:10px;background:var(--dark3);border-radius:4px;font-size:13px;color:var(--text)">${text}</div>`;
+}
+
+function adminTab(t){
+  ['overview','probability','players','theory'].forEach(tab=>{
+    document.getElementById('admin-'+tab).style.display=tab===t?'block':'none';
+    document.getElementById('tab-'+tab).classList.toggle('active',tab===t);
+  });
+  if(t==='overview'){renderAdminOverview();renderActivity();}
+  if(t==='players'){renderLeaderboard();}
+}
+
+function renderAdminOverview(){
+  const profit=globalStats.totalBet-globalStats.totalWon;
+  document.getElementById('k-spins').textContent=globalStats.spins.toLocaleString();
+  document.getElementById('k-profit').textContent=(profit>=0?'+':'')+' BND '+profit.toFixed(2);
+  document.getElementById('k-profit').className='kpi-value '+(profit>=0?'pos':'neg');
+  document.getElementById('k-bets').textContent='BND '+globalStats.totalBet.toFixed(0);
+  const rtp=globalStats.totalBet>0?((globalStats.totalWon/globalStats.totalBet)*100).toFixed(1)+'%':'—';
+  document.getElementById('k-rtp').textContent=rtp;
+  const expRtp=calcExpectedRTP();
+  document.getElementById('expected-rtp-disp').textContent=(expRtp*100).toFixed(1)+'%';
+  document.getElementById('exp-rtp-bar').style.width=(expRtp*100)+'%';
+  if(globalStats.totalBet>0){
+    const actRtp=(globalStats.totalWon/globalStats.totalBet)*100;
+    document.getElementById('actual-rtp-disp').textContent=actRtp.toFixed(1)+'%';
+    document.getElementById('act-rtp-bar').style.width=Math.min(actRtp,100)+'%';
+  }
+  const ob=globalStats.outcomes;
+  const total=Object.values(ob).reduce((a,b)=>a+b,0)||1;
+  document.getElementById('outcome-breakdown').innerHTML=
+    Object.entries(ob).map(([k,v])=>`<div style="display:flex;justify-content:space-between;padding:2px 0"><span>${k}</span><span style="color:var(--gold);font-family:'Cinzel',serif">${v} (${((v/total)*100).toFixed(1)}%)</span></div>`).join('')||'No spins yet.';
+  updateExpectedRTPDisp();
+  showActiveModeDisp(currentMode==='normal'?'Normal Mode — Balanced casino setup (~94% RTP)':currentMode==='small_wins'?'Small Wins Mode — Frequent small payouts':currentMode==='ups_downs'?'Ups & Downs Mode — High variance':'Jackpot Time — Controlled 100-spin sequence');
+}
+
+function updateExpectedRTPDisp(){
+  const rtp=calcExpectedRTP();
+  const el=document.getElementById('expected-rtp-disp');if(el)el.textContent=(rtp*100).toFixed(1)+'%';
+  const bar=document.getElementById('exp-rtp-bar');if(bar)bar.style.width=(rtp*100)+'%';
+}
+
+function renderProbControls(){
+  const labels=['🕌 Mosque','🦅 Eagle','👑 Crown','🌺 Simpor','🏝️ Bay','🛢️ Oil','🎋 Bamboo'];
+  document.getElementById('prob-controls').innerHTML=labels.map((l,i)=>`
+    <div class="prob-row">
+      <span style="font-size:13px;min-width:100px">${l}</span>
+      <input type="range" class="prob-slider" min="0.1" max="30" step="0.1" value="${weights[i]}" id="pw-${i}" oninput="probChanged(${i},this.value)">
+      <span class="prob-val" id="pv-${i}">${weights[i]}</span>
+    </div>`).join('');
+  updateCalcRTP();
+}
+
+function probChanged(i,v){
+  weights[i]=parseFloat(v);
+  document.getElementById('pv-'+i).textContent=parseFloat(v).toFixed(1);
+  updateCalcRTP();
+}
+
+function updateProbControlDisplay(){
+  for(let i=0;i<weights.length;i++){
+    const sl=document.getElementById('pw-'+i);const pv=document.getElementById('pv-'+i);
+    if(sl)sl.value=weights[i];if(pv)pv.textContent=weights[i].toFixed(1);
+  }
+  updateCalcRTP();
+}
+
+function updateCalcRTP(){
+  const rtp=calcExpectedRTP();
+  const el=document.getElementById('calc-rtp-disp');const ed=document.getElementById('calc-edge-disp');
+  if(el)el.textContent=(rtp*100).toFixed(2)+'%';if(ed)ed.textContent=((1-rtp)*100).toFixed(2)+'%';
+}
+
+function applyProbabilities(){
+  currentMode='custom';
+  const mb=document.getElementById('mode-banner-slot');
+  if(mb){mb.className='mode-banner mode-normal';mb.textContent='CUSTOM PROBABILITY MODE';}
+  updateExpectedRTPDisp();
+  alert('Probability settings applied to the game engine!');
+}
+
+function renderLeaderboard(){
+  const rows=Object.entries(players).filter(([u])=>u!=='admin').sort((a,b)=>b[1].balance-a[1].balance);
+  document.getElementById('leaderboard-body').innerHTML=rows.map(([u,p],i)=>`
+    <tr onclick="showPlayerDetail('${u}')" style="cursor:pointer">
+      <td class="${i===0?'rank-1':i===1?'rank-2':i===2?'rank-3':''}">${i+1}</td>
+      <td>${u}</td>
+      <td style="color:var(--gold);font-family:'Cinzel',serif;font-size:12px">BND ${p.balance.toFixed(2)}</td>
+      <td>${p.spins}</td>
+      <td style="color:${p.totalWon-p.totalBet>=0?'#2ecc71':'#e74c3c'}">${(p.totalWon-p.totalBet>=0?'+':'')}BND ${(p.totalWon-p.totalBet).toFixed(2)}</td>
+    </tr>`).join('');
+}
+
+function showPlayerDetail(u){
+  const p=players[u];const net=p.totalWon-p.totalBet;
+  document.getElementById('player-details').innerHTML=`
+    <div style="font-family:'Cinzel',serif;font-size:14px;color:var(--gold);margin-bottom:10px">${u}</div>
+    <div class="stat-row"><span>Balance</span><span style="color:var(--gold);font-family:'Cinzel',serif">BND ${p.balance.toFixed(2)}</span></div>
+    <div class="stat-row"><span>Total Spins</span><span style="color:var(--text)">${p.spins}</span></div>
+    <div class="stat-row"><span>Total Wagered</span><span style="color:var(--text)">BND ${p.totalBet.toFixed(2)}</span></div>
+    <div class="stat-row"><span>Total Won</span><span style="color:#2ecc71">BND ${p.totalWon.toFixed(2)}</span></div>
+    <div class="stat-row"><span>Net P&L</span><span style="color:${net>=0?'#2ecc71':'#e74c3c'}">${net>=0?'+':''}BND ${net.toFixed(2)}</span></div>
+    <div class="stat-row"><span>Win Rate</span><span style="color:var(--text)">${p.spins>0?((p.wins/p.spins)*100).toFixed(1):'0'}%</span></div>
+    <div class="stat-row"><span>Player RTP</span><span style="color:var(--text)">${p.totalBet>0?((p.totalWon/p.totalBet)*100).toFixed(1):'—'}%</span></div>
+    <div style="margin-top:12px;font-size:10px;letter-spacing:2px;color:var(--text2);font-family:'Cinzel',serif;margin-bottom:6px">LAST 10 SPINS</div>
+    ${p.history.slice(0,10).map(h=>`<div style="display:flex;justify-content:space-between;padding:3px 0;font-size:12px;border-bottom:1px solid rgba(255,255,255,0.04)"><span>${h.sym}</span><span style="color:${h.net>=0?'#2ecc71':'#e74c3c'}">${h.net>=0?'+':''}BND ${h.net.toFixed(2)}</span></div>`).join('')}
+  `;
+}
+
+function addActivity(user,sym,net,type){
+  globalStats.activity.unshift({user,sym,net,type,ts:new Date().toLocaleTimeString()});
+  if(globalStats.activity.length>100)globalStats.activity.pop();
+  renderActivity();
+}
+
+function renderActivity(){
+  const el=document.getElementById('activity-list');
+  if(!el)return;
+  el.innerHTML=globalStats.activity.slice(0,30).map(a=>`
+    <div class="act-item">
+      <span class="act-user">${a.user}</span>
+      <span style="font-size:13px">${a.sym}</span>
+      <span class="act-result ${a.type}">${a.net>=0?'+':''}BND ${a.net.toFixed(2)}</span>
+      <span style="color:var(--text2);font-size:11px">${a.ts}</span>
+    </div>`).join('')||'<div style="color:var(--text2);font-size:12px;padding:8px">No activity yet.</div>';
+}
+
+function resetAllStats(){
+  if(!confirm('Reset all global statistics? Player balances will also reset.'))return;
+  globalStats={spins:0,totalBet:0,totalWon:0,outcomes:{jackpot:0,win:0,partial:0,loss:0},activity:[]};
+  Object.keys(players).forEach(u=>{players[u].spins=0;players[u].totalBet=0;players[u].totalWon=0;players[u].history=[];players[u].wins=0;if(u!=='admin')players[u].balance=1000;});
+  renderAdminOverview();renderLeaderboard();renderActivity();
+}
+
+function updateSlotUI(){
+  document.getElementById('bet-display').textContent='BND '+currentBet;
+  updateSessionStats();
+}
+
+// INIT
+setTemplate('normal',true);
+</script>
+</body>
+</html>
