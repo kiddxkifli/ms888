@@ -1,0 +1,361 @@
+/* General Body and Layout Styling */
+body {
+    margin: 0;
+    overflow: hidden; /* Prevent scrollbars */
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+    background-color: #1a0a00; /* Background deep - Wengé wood */
+    color: #FFF8E7; /* White warm - body text */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    background-image: url('data:image/svg+xml;utf8,<svg width="100%" height="100%" xmlns="http://www.w3.org/2000/svg"><defs><pattern id="songketPattern" patternUnits="userSpaceOnUse" width="22" height="22"><path d="M0 0 L22 0 L22 6 L0 6 Z" fill="%23C9A84C"/><path d="M0 6 L22 6 L22 12 L0 12 Z" fill="%238B0000"/><path d="M0 12 L22 12 L22 18 L0 18 Z" fill="%23C9A84C"/><path d="M0 18 L22 18 L22 22 L0 22 Z" fill="%23000000"/></pattern></defs><rect width="100%" height="100%" fill="url(%23songketPattern)"/></svg>');
+    background-repeat: repeat;
+    background-size: 100% 4px; /* Songket bar at the top */
+    position: relative;
+}
+
+/* Main container for the app */
+#app-container {
+    width: 100%;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    box-sizing: border-box;
+    border-top: 4px solid #C9A84C; /* Songket bar */
+    border-bottom: 4px solid #C9A84C; /* Songket bar */
+}
+
+/* Songket Bar - Used for header and footer */
+.songket-bar {
+    background: repeating-linear-gradient(
+      90deg,
+      #C9A84C 0, #C9A84C 6px,
+      #8B0000 6px, #8B0000 12px,
+      #C9A84C 12px, #C9A84C 18px,
+      #000 18px, #000 22px
+    );
+    height: 4px;
+}
+
+/* Flag Strip - Used below header */
+.flag-strip {
+    background: repeating-linear-gradient(
+      90deg,
+      #F7E017 0, #F7E017 33%,
+      #fff 33%, #fff 66%,
+      #000 66%, #000 100%
+    );
+    height: 6px;
+}
+
+/* Ornament Divider */
+.ornament-divider {
+    display:flex;
+    align-items:center;
+    gap:6px;
+    margin:12px 0;
+}
+.ornament-divider .line {
+    flex:1;
+    height:1px;
+    background:#5a3010; /* Border brown */
+}
+.ornament-divider .ornament {
+    width:6px;
+    height:6px;
+    background:#C9A84C; /* Gold primary */
+    transform:rotate(45deg);
+}
+
+
+/* Authentication Section */
+#auth-section {
+    width: 100%;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background-color: #1a0a00;
+    position: absolute; /* Overlays game UI */
+    top: 0;
+    left: 0;
+    z-index: 1000; /* Ensure it's on top */
+}
+
+#auth-section h2 {
+    color: #E8C97A; /* Gold light */
+    margin-bottom: 12px;
+    font-size: 2.5em;
+    text-align: center;
+}
+
+#auth-section p {
+    color: #C4B89A; /* White dim */
+    font-size: 0.9em;
+    margin-top: 10px;
+}
+
+#auth-section a {
+    color: #C9A84C; /* Gold primary */
+    text-decoration: none;
+    font-weight: bold;
+}
+
+#auth-section a:hover {
+    text-decoration: underline;
+}
+
+#login-form, #signup-form {
+    background-color: #3a1c00; /* Card background */
+    padding: 30px 40px;
+    border-radius: 8px;
+    border: 1px solid #5a3010; /* Border brown */
+    box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+    width: 350px;
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+input[type="text"],
+input[type="password"],
+input[type="number"] {
+    width: calc(100% - 24px); /* Adjust for padding */
+    padding: 12px;
+    margin-bottom: 15px;
+    background-color: #2b1400; /* Background dark */
+    border: 1px solid #5a3010; /* Border brown */
+    color: #FFF8E7; /* White warm */
+    border-radius: 6px;
+    font-size: 1em;
+    box-sizing: border-box;
+}
+
+input[type="text"]:focus,
+input[type="password"]:focus,
+input[type="number"]:focus {
+    outline: none;
+    border-color: #C9A84C; /* Gold primary */
+    box-shadow: 0 0 0 2px rgba(201, 168, 76, 0.3);
+}
+
+button {
+    background-color: #C9A84C; /* Gold primary */
+    color: #1a0a00; /* Background deep */
+    border: none;
+    padding: 12px 25px;
+    border-radius: 6px;
+    font-size: 1.1em;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    width: 100%;
+    margin-top: 10px;
+}
+
+button:hover {
+    background-color: #E8C97A; /* Gold light */
+}
+
+button:disabled {
+    background-color: #8a6e2f; /* Gold dim */
+    cursor: not-allowed;
+}
+
+
+/* Game UI Section */
+#game-ui {
+    width: 100%;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    background-color: #1a0a00; /* Background deep */
+    position: relative;
+    overflow: hidden;
+}
+
+/* Header */
+#game-ui header {
+    height: 60px; /* Fixed header height */
+    background-color: #2b1400; /* Background dark */
+    border-bottom: 1px solid #5a3010; /* Border brown */
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 20px;
+    box-sizing: border-box;
+}
+
+#player-info {
+    color: #C4B89A; /* White dim */
+    font-size: 0.9em;
+}
+#player-info #player-id-display {
+    color: #C9A84C; /* Gold primary */
+    font-weight: bold;
+}
+#player-credits {
+    color: #E8C97A; /* Gold light */
+    font-weight: bold;
+}
+
+#game-title {
+    font-size: 1.8em;
+    color: #E8C97A; /* Gold light */
+    font-weight: bold;
+    letter-spacing: 1px;
+}
+#game-title::before {
+    content: "★ ";
+    color: #C9A84C; /* Gold primary */
+}
+
+#game-actions button {
+    background-color: transparent;
+    border: 1px solid #8B0000; /* Red royal */
+    color: #8B0000;
+    padding: 8px 15px;
+    font-size: 0.9em;
+    font-weight: normal;
+    margin-left: 10px;
+}
+#game-actions button:hover {
+    background-color: rgba(139, 0, 0, 0.2);
+}
+
+
+/* Main Game Area */
+#game-ui main {
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    overflow: hidden;
+}
+
+#slot-machine-3d-canvas-container {
+    width: 100%;
+    height: 70%; /* Adjust as needed */
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #000; /* Placeholder background for 3D canvas */
+    /* Add subtle texture or pattern resembling Bruneian motifs if possible */
+}
+
+/* Game Controls */
+#game-controls {
+    height: 30%; /* Adjust as needed */
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background-color: #2b1400; /* Background dark */
+    border-top: 1px solid #5a3010; /* Border brown */
+    padding: 20px;
+    box-sizing: border-box;
+}
+
+#betting-controls {
+    display: flex;
+    align-items: center;
+    margin-bottom: 15px;
+}
+
+#betting-controls label {
+    color: #8a6e2f; /* Gold dim */
+    margin-right: 10px;
+    font-size: 1.1em;
+}
+
+#betting-controls input[type="number"] {
+    width: 80px;
+    margin-right: 10px;
+    background-color: #3a1c00; /* Card background */
+    border-color: #8a6e2f; /* Gold dim */
+}
+
+#betting-controls #currency-unit {
+    color: #E8C97A; /* Gold light */
+    font-weight: bold;
+    font-size: 1.1em;
+}
+
+#betting-controls #place-bet-button {
+    background-color: #5a3010; /* Border brown, for secondary action */
+    color: #FFF8E7; /* White warm */
+    font-weight: normal;
+    margin-left: 20px;
+}
+
+#spin-button {
+    width: 200px;
+    height: 60px;
+    font-size: 1.8em;
+    font-weight: bold;
+    letter-spacing: 2px;
+    background-color: #F7E017; /* Accent yellow */
+    color: #1a0a00; /* Background deep */
+    margin-bottom: 15px;
+    border-radius: 10px;
+    box-shadow: 0 5px 15px rgba(247,224,23,0.4);
+}
+#spin-button:hover {
+    background-color: #e0c90f; /* Darker yellow */
+}
+#spin-button:disabled {
+    background-color: #8a6e2f; /* Gold dim */
+    box-shadow: none;
+}
+
+#game-messages {
+    color: #E8C97A; /* Gold light */
+    font-size: 1.2em;
+    font-weight: bold;
+    min-height: 30px; /* Reserve space for messages */
+    text-align: center;
+}
+
+/* Footer */
+#game-ui footer {
+    height: 40px; /* Fixed footer height */
+    background-color: #1a0a00; /* Background deep */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.8em;
+    color: #8a6e2f; /* Gold dim */
+    border-top: 1px solid #5a3010; /* Border brown */
+    position: relative;
+}
+#game-ui footer::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 4px;
+    background: repeating-linear-gradient(
+      90deg,
+      #F7E017 0, #F7E017 33%,
+      #fff 33%, #fff 66%,
+      #000 66%, #000 100%
+    ); /* Flag strip */
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    #auth-section h2 { font-size: 2em; }
+    #login-form, #signup-form { width: 90%; padding: 20px; }
+    button { font-size: 1em; }
+    #spin-button { width: 180px; height: 50px; font-size: 1.5em; }
+    #game-title { font-size: 1.5em; }
+    #player-info { font-size: 0.8em; }
+    #game-actions button { font-size: 0.8em; padding: 6px 12px; }
+}

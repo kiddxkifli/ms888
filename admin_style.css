@@ -1,0 +1,432 @@
+
+/* General Body and Layout Styling */
+body {
+    margin: 0;
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+    background-color: #1a0a00; /* Background deep - Wengé wood */
+    color: #FFF8E7; /* White warm - body text */
+    display: flex;
+    min-height: 100vh;
+    overflow: hidden; /* Prevent scrollbars on body */
+}
+
+/* Main container for the app */
+#app-container {
+    width: 100%;
+    display: flex;
+    position: relative;
+}
+
+/* Sidebar */
+#sidebar {
+    width: 200px; /* Fixed sidebar width */
+    background-color: #2b1400; /* Background dark */
+    border-right: 1px solid #5a3010; /* Border brown */
+    display: flex;
+    flex-direction: column;
+    position: fixed; /* Keep sidebar fixed */
+    height: 100vh;
+    z-index: 100; /* Ensure sidebar is above other content */
+}
+
+/* Songket Bar - Applied to Sidebar header and Topbar */
+.songket-bar {
+    background: repeating-linear-gradient(
+      90deg,
+      #C9A84C 0, #C9A84C 6px, /* Gold primary */
+      #8B0000 6px, #8B0000 12px, /* Red royal */
+      #C9A84C 12px, #C9A84C 18px, /* Gold primary */
+      #000 18px, #000 22px      /* Black */
+    );
+    height: 4px;
+}
+
+.sidebar-header {
+    padding: 15px 0;
+    text-align: center;
+    border-bottom: 1px solid #5a3010;
+}
+
+.sidebar-header .logo {
+    font-size: 1.8em;
+    color: #E8C97A; /* Gold light */
+    font-weight: bold;
+    letter-spacing: 1px;
+}
+.sidebar-header .logo::before {
+    content: "★ ";
+    color: #C9A84C; /* Gold primary */
+}
+.sidebar-header .subtitle {
+    font-size: 0.8em;
+    color: #8a6e2f; /* Gold dim */
+}
+
+.sidebar-nav-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    flex-grow: 1; /* Push footer to bottom */
+}
+
+.nav-section-header {
+    font-size: 0.8em;
+    color: #8a6e2f; /* Gold dim */
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    padding: 15px 20px 5px 20px;
+    margin-top: 10px;
+}
+
+.nav-item {
+    display: block;
+    padding: 12px 20px;
+    color: #C4B89A; /* White dim */
+    text-decoration: none;
+    font-size: 1.1em;
+    transition: all 0.3s ease;
+    position: relative;
+    border-left: 3px solid transparent; /* For active state */
+}
+
+.nav-item i {
+    margin-right: 12px;
+    width: 20px; /* Icon spacing */
+    text-align: center;
+}
+
+.nav-item:hover {
+    background-color: #3a1c00; /* Card background on hover */
+    color: #C9A84C; /* Gold primary on hover */
+}
+
+.nav-item.active {
+    background-color: rgba(201, 168, 76, 0.15); /* Subtle gold tint */
+    color: #C9A84C; /* Gold primary */
+    border-left: 3px solid #C9A84C; /* Gold primary active border */
+}
+
+.sidebar-footer {
+    margin-top: auto; /* Push to bottom */
+    padding: 15px 20px;
+    font-size: 0.8em;
+    color: #8a6e2f; /* Gold dim */
+    border-top: 1px solid #5a3010;
+    text-align: center;
+}
+#brunei-clock {
+    font-weight: bold;
+}
+
+/* Main Content Area */
+#main-content-area {
+    flex-grow: 1;
+    margin-left: 200px; /* Space for sidebar */
+    display: flex;
+    flex-direction: column;
+    background-color: #1a0a00; /* Background deep */
+}
+
+/* Top Bar */
+.top-bar {
+    height: 60px;
+    background-color: #2b1400; /* Background dark */
+    border-bottom: 1px solid #5a3010;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 20px;
+    box-sizing: border-box;
+}
+.top-bar .flag-strip {
+    height: 6px; /* Flag strip height */
+    background: repeating-linear-gradient(
+      90deg,
+      #F7E017 0, #F7E017 33%, /* Accent yellow */
+      #fff 33%, #fff 66%,       /* White */
+      #000 66%, #000 100%        /* Black */
+    );
+}
+#page-title {
+    font-size: 1.5em;
+    color: #E8C97A; /* Gold light */
+    font-weight: bold;
+    margin: 0;
+    letter-spacing: 0.5px;
+}
+.header-right {
+    display: flex;
+    align-items: center;
+}
+.live-badge {
+    background-color: #8B0000; /* Red royal */
+    color: white;
+    padding: 5px 10px;
+    border-radius: 4px;
+    font-size: 0.8em;
+    font-weight: bold;
+    margin-right: 15px;
+}
+.admin-key-indicator {
+    font-size: 0.9em;
+    color: #8a6e2f; /* Gold dim */
+}
+
+.content-wrapper {
+    padding: 20px;
+    flex-grow: 1;
+    overflow-y: auto; /* Allow scrolling if content is long */
+}
+
+.section-title {
+    font-size: 1.8em;
+    color: #E8C97A; /* Gold light */
+    font-weight: bold;
+    margin-bottom: 10px;
+    letter-spacing: 0.5px;
+    padding-bottom: 5px;
+    border-bottom: 1px solid #5a3010; /* Border brown */
+    display: inline-block; /* To respect padding */
+}
+.section-title .section-title-en {
+    font-size: 0.7em;
+    color: #8a6e2f; /* Gold dim */
+    margin-left: 10px;
+    font-weight: normal;
+}
+
+/* Alert Banner */
+.alert-banner {
+    background-color: rgba(139, 0, 0, 0.15); /* Red royal tint */
+    color: #ef5350; /* Red for text */
+    border-left: 4px solid #ef5350;
+    padding: 12px 15px;
+    margin-bottom: 20px;
+    border-radius: 4px;
+    display: flex;
+    align-items: center;
+    font-size: 0.95em;
+}
+.alert-banner i {
+    margin-right: 10px;
+    font-size: 1.2em;
+}
+
+/* Stats Grid */
+.stats-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 20px;
+    margin-bottom: 20px;
+}
+
+.stat-card {
+    background-color: #3a1c00; /* Card background */
+    border-radius: 8px;
+    padding: 20px;
+    border: 1px solid #5a3010;
+    position: relative;
+    overflow: hidden; /* Ensure accent bar stays within bounds */
+}
+.stat-card .card-header {
+    font-size: 0.9em;
+    color: #8a6e2f; /* Gold dim */
+    text-transform: uppercase;
+    margin-bottom: 8px;
+}
+.stat-card .card-value {
+    font-size: 2em;
+    color: #E8C97A; /* Gold light */
+    font-weight: bold;
+}
+
+/* Accent Bars for Stat Cards */
+.card-accent-bar {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 3px; /* Accent bar height */
+    background-color: #C9A84C; /* Default Gold primary */
+}
+/* Specific accent colors */
+.stat-card:nth-child(1) .card-accent-bar { background-color: #C9A84C; } /* Gold */
+.stat-card:nth-child(2) .card-accent-bar { background-color: #E8C97A; } /* Lighter Gold */
+.stat-card:nth-child(3) .card-accent-bar { background-color: #4CAF50; } /* Green for RTP */
+.stat-card:nth-child(4) .card-accent-bar { background-color: #EF5350; } /* Red for House Edge */
+
+
+/* Two Panel Row */
+.two-panel-row {
+    display: flex;
+    gap: 20px;
+    margin-bottom: 20px;
+}
+.panel-left, .panel-right {
+    flex: 1;
+    background-color: #3a1c00; /* Card background */
+    border-radius: 8px;
+    border: 1px solid #5a3010;
+    padding: 20px;
+}
+.panel-left h3, .panel-right h3 {
+    font-size: 1.3em;
+    color: #C9A84C; /* Gold primary */
+    margin-top: 0;
+    margin-bottom: 15px;
+}
+
+/* RTP Meter */
+.rtp-meter {
+    text-align: center;
+}
+.rtp-value {
+    font-size: 2.5em;
+    font-weight: bold;
+    color: #E8C97A; /* Gold light */
+    margin-bottom: 15px;
+}
+.rtp-progress-bar-container {
+    width: 100%;
+    background-color: #5a3010; /* Border brown */
+    border-radius: 5px;
+    height: 12px;
+    overflow: hidden;
+    margin-bottom: 15px;
+}
+.rtp-progress-bar {
+    background-color: #4CAF50; /* Green light */
+    height: 100%;
+    width: 0%; /* Will be updated by JS */
+    border-radius: 5px;
+}
+.rtp-comparison {
+    font-size: 0.95em;
+    color: #C4B89A; /* White dim */
+    margin-bottom: 10px;
+}
+.rtp-comparison .rtp-label { margin-bottom: 5px; }
+.rtp-comparison span { color: #E8C97A; font-weight: bold; }
+.rtp-info { font-size: 0.9em; color: #8a6e2f; } /* Gold dim */
+.rtp-info span { color: #C9A84C; font-weight: bold; } /* Gold primary */
+
+
+/* Tables */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 15px;
+    background-color: #3a1c00; /* Card background */
+    border: 1px solid #5a3010;
+    border-radius: 8px;
+    overflow: hidden; /* For rounded corners */
+}
+th, td {
+    padding: 12px 15px;
+    text-align: left;
+    border-bottom: 1px solid #5a3010; /* Border brown for rows */
+}
+th {
+    background-color: #2b1400; /* Background dark */
+    color: #8a6e2f; /* Gold dim */
+    font-weight: bold;
+    text-transform: uppercase;
+    font-size: 0.9em;
+    letter-spacing: 0.5px;
+}
+tbody tr:nth-child(even) {
+    background-color: #221000; /* Slightly darker for even rows */
+}
+tbody tr:hover {
+    background-color: #3a1c00; /* Card background */
+}
+
+/* Specific table cell styles */
+td:nth-child(2), /* Player ID */
+td:nth-child(3), /* Bet */
+td:nth-child(4), /* Payout */
+td:nth-child(5) { /* Multiplier */
+    text-align: right;
+    font-family: monospace; /* Monospace for numbers */
+}
+td:nth-child(6) { /* Bonus */
+    text-align: center;
+}
+
+/* Result Pills/Badges */
+.result-pill {
+    display: inline-block;
+    padding: 5px 10px;
+    border-radius: 15px;
+    font-size: 0.8em;
+    font-weight: bold;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+.result-pill.win { background-color: rgba(76, 175, 80, 0.2); color: #4CAF50; } /* Green */
+.result-pill.loss { background-color: rgba(239, 83, 80, 0.15); color: #EF5350; } /* Red */
+.result-pill.big-win { background-color: rgba(201, 168, 76, 0.2); color: #E8C97A; } /* Gold light */
+
+/* Footer */
+footer {
+    height: 40px;
+    background-color: #1a0a00; /* Background deep */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.8em;
+    color: #8a6e2f; /* Gold dim */
+    border-top: 1px solid #5a3010;
+    position: relative;
+}
+footer::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 6px; /* Flag strip height */
+    background: repeating-linear-gradient(
+      90deg,
+      #F7E017 0, #F7E017 33%,
+      #fff 33%, #fff 66%,
+      #000 66%, #000 100%
+    );
+}
+footer p { margin: 0; }
+footer p::after {
+    content: "◆";
+    color: #C9A84C; /* Gold primary */
+    margin-left: 8px;
+}
+
+/* Responsive Adjustments */
+@media (max-width: 1024px) {
+    #sidebar { width: 180px; }
+    #main-content-area { margin-left: 180px; }
+    .nav-item { font-size: 1em; padding: 10px 15px; }
+    .nav-section-header { padding-left: 15px; }
+    .stats-grid { grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); }
+    .two-panel-row { flex-direction: column; }
+    .panel-left, .panel-right { flex: unset; width: 100%; }
+}
+
+@media (max-width: 768px) {
+    #sidebar { width: 150px; }
+    #main-content-area { margin-left: 150px; }
+    .nav-item { font-size: 0.95em; padding: 8px 15px; }
+    .nav-section-header { padding: 10px 15px 3px 15px; }
+    .sidebar-header .logo { font-size: 1.5em; }
+    .sidebar-header .subtitle { font-size: 0.7em; }
+    .top-bar { height: 50px; padding: 0 15px; }
+    #page-title { font-size: 1.3em; }
+    .header-right .live-badge { margin-right: 10px; padding: 3px 8px; font-size: 0.7em;}
+    .stats-grid { grid-template-columns: 1fr; }
+    .stat-card { padding: 15px; }
+    .stat-card .card-value { font-size: 1.8em; }
+    .section-title { font-size: 1.5em; }
+    .alert-banner { font-size: 0.85em; padding: 10px 12px; }
+    .rtp-value { font-size: 2em; }
+    table th, table td { padding: 8px 10px; font-size: 0.85em; }
+    footer { height: 35px; font-size: 0.7em;}
+}

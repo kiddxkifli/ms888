@@ -1,0 +1,142 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mestika - Admin Panel</title>
+    <link rel="stylesheet" href="admin_style.css"> <!-- CSS for admin panel theme -->
+    <!-- Font Awesome for icons (if needed for Admin) -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+    <div id="app-container">
+        <!-- Sidebar -->
+        <aside id="sidebar">
+            <div class="songket-bar"></div>
+            <div class="sidebar-header">
+                <div class="logo">★ Mestika</div>
+                <div class="subtitle">Konsol Pentadbiran Slot</div>
+            </div>
+            <nav>
+                <ul class="sidebar-nav-list">
+                    <!-- Operations Section -->
+                    <li class="nav-section-header">Operasi</li>
+                    <li><a href="#dashboard" class="nav-item active"><i class="fas fa-chart-line"></i> Papan Pemuka</a></li>
+                    <li><a href="#probability" class="nav-item"><i class="fas fa-sliders-h"></i> Kawalan Kebarangkalian</a></li>
+                    <li><a href="#game-config" class="nav-item"><i class="fas fa-cog"></i> Tetapan Permainan</a></li>
+                    
+                    <!-- Players Section -->
+                    <li class="nav-section-header">Pemain</li>
+                    <li><a href="#players" class="nav-item"><i class="fas fa-users"></i> Pemain</a></li>
+                    <li><a href="#spin-history" class="nav-item"><i class="fas fa-history"></i> Sejarah Putar</a></li>
+                </ul>
+            </nav>
+            <div class="sidebar-footer">
+                <div id="brunei-clock">Waktu Brunei: Loading...</div>
+            </div>
+        </aside>
+
+        <!-- Main Content Area -->
+        <div id="main-content-area">
+            <header class="top-bar">
+                <div class="songket-bar"></div>
+                <div class="flag-strip"></div>
+                <h1 id="page-title">Papan Pemuka</h1>
+                <div class="header-right">
+                    <span class="live-badge">Live</span>
+                    <span class="admin-key-indicator">Admin Key: ********</span> <!-- Placeholder -->
+                </div>
+            </header>
+
+            <div class="content-wrapper">
+                <!-- Content will be loaded here based on navigation -->
+                
+                <!-- Dashboard Section (Default View) -->
+                <section id="dashboard" class="content-section">
+                    <h2 class="section-title">Papan Pemuka <span class="section-title-en">Dashboard</span></h2>
+                    
+                    <div class="alert-banner" style="display: none;">
+                        <i class="fas fa-exclamation-triangle"></i> 
+                        <span>RTP exceeds target threshold. Review probability settings.</span>
+                    </div>
+
+                    <div class="stats-grid">
+                        <div class="stat-card">
+                            <div class="card-header">Jumlah Putaran</div>
+                            <div class="card-value" id="total-spins">0</div>
+                            <div class="card-accent-bar"></div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="card-header">Jumlah Diwageri</div>
+                            <div class="card-value" id="total-wagered">B$0.00</div>
+                            <div class="card-accent-bar"></div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="card-header">RTP Sebenar</div>
+                            <div class="card-value" id="actual-rtp">0.00%</div>
+                            <div class="card-accent-bar"></div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="card-header">Kelebihan Rumah</div>
+                            <div class="card-value" id="house-edge-actual">100.00%</div>
+                            <div class="card-accent-bar"></div>
+                        </div>
+                    </div>
+
+                    <div class="two-panel-row">
+                        <div class="panel-left">
+                            <h3>Kebarangkalian Simbol</h3>
+                            <div id="symbol-probabilities-list">
+                                <!-- Symbol probability bars will be loaded here -->
+                            </div>
+                        </div>
+                        <div class="panel-right">
+                            <h3>Meter RTP</h3>
+                            <div class="rtp-meter">
+                                <div class="rtp-value" id="rtp-meter-value">0.00%</div>
+                                <div class="rtp-progress-bar-container">
+                                    <div class="rtp-progress-bar"></div>
+                                </div>
+                                <div class="rtp-comparison">
+                                    <div class="rtp-label">Theoretical RTP: <span id="theoretical-rtp-val">--.--%</span></div>
+                                    <div class="rtp-label">House Edge: <span id="house-edge-estimate-val">--.--%</span></div>
+                                </div>
+                                <div class="rtp-info">
+                                    Biggest Win Today: <span id="biggest-win-today">B$0.00</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <h4>Sejarah Putar Terkini</h4>
+                    <table id="recent-spins-table">
+                        <thead>
+                            <tr>
+                                <th>Masa</th>
+                                <th>Pemain</th>
+                                <th>Pertaruhan</th>
+                                <th>Bayaran</th>
+                                <th>Gandaan</th>
+                                <th>Bonus</th>
+                                <th>Keputusan</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <!-- Recent spins data will be loaded here -->
+                        </tbody>
+                    </table>
+                </section>
+
+                <!-- Other sections will be loaded here -->
+
+            </div>
+            <footer>
+                <p>Mestika Slot · Negara Brunei Darussalam · ◆</p>
+            </footer>
+        </div>
+    </div>
+
+    <script src="admin_app.js"></script> <!-- Main JavaScript for Admin Panel -->
+</body>
+</html>
